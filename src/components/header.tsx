@@ -1,13 +1,6 @@
 import { HomeIcon } from "lucide-react";
 import Link from "next/link";
 
-
-
-
-interface HomeIconProps {
-  className?: string;
-}
-
 export default function Header() {
   return (
     <header className="py-10.5">
