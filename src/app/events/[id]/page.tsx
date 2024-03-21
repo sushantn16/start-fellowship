@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import Sidebar from "@/components/sidebar"
 import { ArrowLeftIcon, MapPinIcon } from "lucide-react"
 
-export default function Component() {
+export default function Component({ params }: { params: { id: number } }) {
     return (
         <div className="grid lg:grid-cols-[250px_1fr] min-h-screen w-full lg:min-h-0">
             <Sidebar />

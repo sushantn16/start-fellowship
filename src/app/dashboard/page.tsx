@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from "react";
 import { getUser } from "@/services/auth.service";
 
-export default function Dashboard() {
+export default function Dashboard({ params }: { params: { id: number } }) {
     const router = useRouter();
 
     useEffect(() => {
