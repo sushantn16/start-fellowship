@@ -16,6 +16,7 @@ export default function UserView() {
     const [startupCity, setStartupCity] = useState('');
     const [startupCountry, setStartupCountry] = useState('');
     const [startupStage, setStartupStage] = useState('');
+    const [phone, setPhone] = useState('');
 
     const handleDialogState = () => {
         setIsDialogOpen(!isDialogOpen);
@@ -33,7 +34,8 @@ export default function UserView() {
             startupDescription,
             startupCity,
             startupCountry,
-            startupStage
+            startupStage,
+            phone
         );
 
         // Reset the form fields after submission

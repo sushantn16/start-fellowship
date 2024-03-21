@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
     const data = await req.json();
     
-    const { name, website, founder, description, city, country, stage } = data;
+    const { name, website, founder, description, city, country, stage, phone } = data;
     const token = req.cookies.get('token')?.value || '';
 
     const user = await getUser(token);
@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
             city,
             country,
             stage,
+            phone,
             users: {
                 connect: { id: user.userId }
             }

@@ -17,13 +17,14 @@ export async function createStartup(
     city: string,
     country: string,
     stage: string,
+    phone: string
   ): Promise<Startup> {
     const response = await fetch('/api/startup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, website, founder, description, city, country, stage })
+        body: JSON.stringify({ name, website, founder, description, city, country, stage, phone })
     });
 
     if (!response.ok) {
