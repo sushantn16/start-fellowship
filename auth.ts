@@ -17,6 +17,8 @@ function generateToken(user: any): string {
   return jwt.sign(
     { 
       userId: user.id,
+      email: user.email,
+      name: user.name,
       role: user.role 
     }, 
     jwtConfig.secret,  
