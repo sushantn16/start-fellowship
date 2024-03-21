@@ -1,5 +1,5 @@
 export async function createMessage(content:string, startupId:number){
-    const response = await fetch('/api/messages', {
+    const response = await fetch('/api/message', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ export async function createMessage(content:string, startupId:number){
 }
 
 export async function getMessages(startupId:number) {
-    const response = await fetch('/api/messages?id='+startupId, {
+    const response = await fetch('/api/message?id='+startupId, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
