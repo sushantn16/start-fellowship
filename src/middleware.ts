@@ -5,15 +5,14 @@ import { isAuthenticated } from './lib/jwtTokenControl';
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
 
-  if(token){
-    const result = await isAuthenticated(request)
+  const result = await isAuthenticated(request)
+  console.log(result)
 
-    if (!result) {
-      return NextResponse.redirect(new URL('/login', request.url))
-    }
+  if (!result) {
+    return NextResponse.redirect(new URL('/login', request.url))
   }
 
-    return NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {
