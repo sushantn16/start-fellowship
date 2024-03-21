@@ -11,7 +11,7 @@ import Notes from "@/components/notes"
 import { useEffect, useState } from "react"
 import { getUser } from "@/services/auth.service"
 import Timeline from "@/components/timeline"
-
+import Files from "@/components/files"
 
 
 export default function DashboardDetail({ params }: { params: { id: number } }) {
@@ -98,10 +98,16 @@ export default function DashboardDetail({ params }: { params: { id: number } }) 
                                     <TabsTrigger value="messages">Messages</TabsTrigger>
                                     {userRole === 'ADMIN' && <TabsTrigger value="tasks">Tasks</TabsTrigger>}
                                     {userRole === 'ADMIN' && <TabsTrigger value="notes">Notes</TabsTrigger>}
+                                    <TabsTrigger value="files">Files</TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="messages"><Messages startupId={params.id}/></TabsContent>
-                                {userRole === 'ADMIN' && <TabsContent value="tasks"><Tasks startupId={params.id}/></TabsContent>}
-                                {userRole === 'ADMIN' && <TabsContent value="notes"><Notes startupId={params.id}/></TabsContent>}
+                                {userRole === 'ADMIN' &&
+                                <>
+                                 <TabsContent value="tasks"><Tasks startupId={params.id}/></TabsContent>
+                                 <TabsContent value="notes"><Notes startupId={params.id}/></TabsContent>
+                                 </>
+                                 }
+                                <TabsContent value="files"><Files startupId={params.id}/></TabsContent>
                             </Tabs>
                         </div>
                     </div>
