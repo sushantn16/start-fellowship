@@ -116,7 +116,7 @@ const handleSignup = async () => {
                       </div>
                       <div className="space-y-2">
                           <Label htmlFor="signup-role">Role</Label>
-                          <Select defaultValue="startup" value={signupForm.role} onValueChange={(value) => setSignupForm({ ...signupForm, role: value })}>
+                          <Select defaultValue="USER" value={signupForm.role} onValueChange={(value) => setSignupForm({ ...signupForm, role: value })}>
                             <SelectTrigger className="w-[180px]">
                               <SelectValue placeholder="startup" />
                             </SelectTrigger>
