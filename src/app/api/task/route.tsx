@@ -17,10 +17,17 @@ export async function POST(req: NextRequest) {
 
 }
 
-export async function GET() {
-    const tasks = await prisma.task.findMany();
-    return NextResponse.json(tasks);
+export async function GET(req: NextRequest) {
+    const prisma = new PrismaClient();
+    const id = req.nextUrl.searchParams.get("id") ?? "";
+    const task = await prisma.task.findMany({
+        where: {
+            startupId: parseInt(id)
+        }
+    });
+    return NextResponse.json(task);
 }
+
 
 export async function PATCH(req: NextRequest) {
     const { taskId, done } = await req.json();

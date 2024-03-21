@@ -8,15 +8,20 @@ export async function POST(req: NextRequest) {
         data: {
             content: data.content,
             startup: {
-                 connect: { id: data.userId }
+                 connect: { id: data.startupId }
             }
         }
     });
     return NextResponse.json(message, { status: 201 });
 }
 
-export async function GET() {
-    const prisma = new PrismaClient()
-    const messages = await prisma.message.findMany()
+export async function GET(req: NextRequest) {
+    const prisma = new PrismaClient();
+    const id = req.nextUrl.searchParams.get("id") ?? "";
+    const messages = await prisma.message.findMany({
+        where: {
+            startupId: parseInt(id)
+        }
+    });
     return NextResponse.json(messages);
 }

@@ -1,16 +1,32 @@
-'use client'
-import { useState } from "react";
+'use'
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { createMessage, getMessages } from "../services/message.service";
 
-export default function Messages() {
+interface MessagesProps {
+    startupId: number;
+}
+
+export default function Messages({ startupId }: MessagesProps) {
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<any>([]);
 
-    const handleMessageSend = () => {
+    useEffect(() => {
+        fetchMessages();
+    }, [startupId]);
+
+    const fetchMessages = async () => {
+            const messages = await getMessages(startupId);
+            setMessages(messages);
+    };
+
+    const handleMessageSend = async () => {
         if (message.trim() !== '') {
-            setMessages([...messages, message]);
-            setMessage('');
+                await createMessage(message, startupId);
+                setMessage('');
+                // After sending the message, fetch updated messages
+                fetchMessages();
         }
     };
 
@@ -18,8 +34,11 @@ export default function Messages() {
         <div>
             <h1>Messages</h1>
             <div>
-                {messages.map((msg, index) => (
-                    <div key={index}>{msg}</div>
+                {messages.map((msg:any, index:any) => (
+                    <div key={index}>
+                        <p>{msg.content}</p>
+
+                    </div>
                 ))}
             </div>
             <div className="flex space-x-2">

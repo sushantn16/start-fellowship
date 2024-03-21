@@ -15,8 +15,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(note, { status: 201 });
 }
 
-export async function GET() {
-    const prisma = new PrismaClient()
-    const notes = await prisma.note.findMany()
-    return NextResponse.json(notes);
+export async function GET(req: NextRequest) {
+    const prisma = new PrismaClient();
+    const id = req.nextUrl.searchParams.get("id") ?? "";
+    const note = await prisma.note.findMany({
+        where: {
+            startupId: parseInt(id)
+        }
+    });
+    return NextResponse.json(note);
 }

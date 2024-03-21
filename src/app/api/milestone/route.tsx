@@ -16,8 +16,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(milestone, { status: 201 });
 }
 
-export async function GET() {
-    const prisma = new PrismaClient()
-    const milestones = await prisma.milestone.findMany()
-    return NextResponse.json(milestones);
+export async function GET(req: NextRequest) {
+    const prisma = new PrismaClient();
+    const id = req.nextUrl.searchParams.get("id") ?? "";
+    const milestone = await prisma.milestone.findMany({
+        where: {
+            startupId: parseInt(id)
+        }
+    });
+    return NextResponse.json(milestone);
 }
+

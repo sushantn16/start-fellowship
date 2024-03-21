@@ -9,7 +9,7 @@ import Notes from "@/components/notes"
 
 
 
-export default function DashboardDetail() {
+export default function DashboardDetail({ params }: { params: { id: number } }) {
     return (
         <div className="grid lg:grid-cols-[250px_1fr] min-h-screen w-full lg:min-h-0">
             <Sidebar />
@@ -78,7 +78,7 @@ export default function DashboardDetail() {
                                     <TabsTrigger value="tasks">Tasks</TabsTrigger>
                                     <TabsTrigger value="notes">Notes</TabsTrigger>
                                 </TabsList>
-                                <TabsContent value="messages"><Messages/></TabsContent>
+                                <TabsContent value="messages"><Messages startupId={params.id}/></TabsContent>
                                 <TabsContent value="tasks"><Tasks/></TabsContent>
                                 <TabsContent value="notes"><Notes /></TabsContent>
                             </Tabs>
