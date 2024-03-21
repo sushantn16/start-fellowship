@@ -32,7 +32,19 @@ export async function PATCH(req: NextRequest) {
     if (!user || !user.userId || typeof user.userId !== 'number') {
         return NextResponse.json(new Error('Invalid userId'), { status: 500 });
     }
-    const event = await prisma.event.update({
+
+    // Check if the user is already connected to the event
+    const event = await prisma.event.findUnique({
+        where: { id: eventId },
+        select: { users: { where: { id: user.userId } } }
+    });
+
+    if (event && event.users.length > 0) {
+        return NextResponse.json(new Error('User is already registered for the event'), { status: 400 });
+    }
+
+    // If the user is not already connected, proceed with connecting them
+    const updatedEvent = await prisma.event.update({
         where: { id: eventId },
         data: {
             users: {
@@ -40,5 +52,7 @@ export async function PATCH(req: NextRequest) {
             }
         }
     });
-    return NextResponse.json(event, { status: 200 });
+
+    return NextResponse.json(updatedEvent, { status: 200 });
 }
+
