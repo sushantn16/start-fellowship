@@ -15,9 +15,8 @@ export default function Dashboard({ params }: { params: { id: number } }) {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const user = await getUser();
-                console.log(user)
-                setUserRole(user.role);
+                const resp = await getUser();
+                setUserRole(resp.user.role);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
@@ -25,8 +24,6 @@ export default function Dashboard({ params }: { params: { id: number } }) {
 
         fetchUser();
     }, []);
-
-    console.log(userRole)
 
     const sampleData = [
         { id: 1, startup: "Acme Inc", location: "San Francisco, CA", stage: "Series A" },
