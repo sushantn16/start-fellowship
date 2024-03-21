@@ -4,6 +4,7 @@ import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, Dropdown
 import { SearchIcon } from "lucide-react"
 import { logout } from "@/services/auth.service"
 import { useRouter } from "next/navigation"
+import { Cat } from "lucide-react"
 
 interface dashboardHeaderProps{
     search: boolean
@@ -41,17 +42,7 @@ export default function DashboardHeader({search}: dashboardHeaderProps) {
                         size="icon"
                         variant="ghost"
                     >
-                        <img
-                            alt="Avatar"
-                            className="rounded-full"
-                            height="32"
-                            src="/placeholder.svg"
-                            style={{
-                                aspectRatio: "32/32",
-                                objectFit: "cover",
-                            }}
-                            width="32"
-                        />
+                        <Cat className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                         <span className="sr-only">Toggle user menu</span>
                     </Button>
                 </DropdownMenuTrigger>
