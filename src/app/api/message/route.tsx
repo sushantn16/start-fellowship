@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
         data: {
             content: data.content,
             startup: {
-                 connect: { id: data.startupId }
+                 connect: { id: parseInt(data.startupId) }
             }
         }
     });
