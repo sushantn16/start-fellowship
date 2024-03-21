@@ -1,3 +1,4 @@
+'use state'
 import React, { useState } from 'react';
 import Sidebar from "@/components/sidebar";
 import DashboardHeader from "@/components/dashboardHeader";
