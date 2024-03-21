@@ -9,7 +9,7 @@ interface Event {
 }
 
 export async function createEvent(title: string, description: string, location: string, date: Date): Promise<Event> {
-    const response = await fetch('/api/events', {
+    const response = await fetch('/api/event', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ export async function createEvent(title: string, description: string, location: 
 }
 
 export async function getEvents(){
-    const response = await fetch('/api/events', {
+    const response = await fetch('/api/event', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ export async function getEvents(){
 }
 
 export async function enrollUser(eventId: number): Promise<Event> {
-    const response = await fetch('/api/events/enroll', {
+    const response = await fetch('/api/event/enroll', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
