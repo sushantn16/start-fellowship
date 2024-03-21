@@ -19,6 +19,7 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   startups  Startup[]
+  events    Event[]
 }
 
 model Startup {
@@ -75,6 +76,16 @@ model Milestone {
   updatedAt   DateTime @updatedAt
   startupId   Int
   startup     Startup  @relation(fields: [startupId], references: [id])
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  location    String   // New field for event location
+  date        DateTime // New field for event date
+  createdAt   DateTime @default(now())
+  users       User[]   // Many-to-many relation with User
 }
 
 enum Role {

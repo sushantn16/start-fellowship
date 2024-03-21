@@ -62,10 +62,8 @@ export default function Component() {
                                 </div>
                             </div>
                         </div>
-                        <div className="border rounded-lg p-4">
-                            <div className="w-full grid justify-end items-end gap-2">
-                                <Button type="submit">RSVP</Button>
-                            </div>
+                        <div className="w-full grid justify-end items-end p-4">
+                            <Button type="submit">RSVP</Button>
                         </div>
                     </div>
                 </div>

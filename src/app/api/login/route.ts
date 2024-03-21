@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client'
 import { validatePassword, generateToken } from '../../../../auth';
-import { serialize } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
