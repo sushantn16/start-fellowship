@@ -2,9 +2,20 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { SearchIcon } from "lucide-react"
+import { logout } from "@/services/auth.service"
+import { useRouter } from "next/router"
 
 
 export default function DashboardHeader() {
+
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        const res = await logout();
+        router.push('/login');
+
+
+    }
     return (
         <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
             <div className="w-full flex-1">
@@ -46,7 +57,7 @@ export default function DashboardHeader() {
                     <DropdownMenuItem>Settings</DropdownMenuItem>
                     <DropdownMenuItem>Support</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </header>
