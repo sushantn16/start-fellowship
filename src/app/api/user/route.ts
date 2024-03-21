@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUser } from '@/lib/jwtTokenControl';
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
     let token = req.cookies.get('token')?.value || '';
 
-    const user = getUser(token);
+    const user = await getUser(token);
 
     if(user){
         return NextResponse.json({ user: user, status: true }, { status: 200 })

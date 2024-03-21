@@ -11,7 +11,7 @@ const getUser = async (token: string) => {
         const decoded = await jose.jwtVerify(token, jwtConfig.secret)
 
         if (decoded.payload?.userId) {
-            return decoded;
+            return decoded.payload;
         }
     }
     return false;
