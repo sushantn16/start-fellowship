@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { MapPinIcon, ArrowLeftIcon } from "lucide-react"
@@ -6,10 +8,27 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Messages from "@/components/messages"
 import Tasks from "@/components/tasks"
 import Notes from "@/components/notes"
+import { useEffect, useState } from "react"
+import { getUser } from "@/services/auth.service"
 
 
 
 export default function DashboardDetail({ params }: { params: { id: number } }) {
+    const [userRole, setUserRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const resp = await getUser();
+                setUserRole(resp.user.role);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUser();
+    }, []);
+
     return (
         <div className="grid lg:grid-cols-[250px_1fr] min-h-screen w-full lg:min-h-0">
             <Sidebar />
@@ -75,12 +94,12 @@ export default function DashboardDetail({ params }: { params: { id: number } }) 
                             <Tabs defaultValue="messages" className="w-[400px]">
                                 <TabsList>
                                     <TabsTrigger value="messages">Messages</TabsTrigger>
-                                    <TabsTrigger value="tasks">Tasks</TabsTrigger>
-                                    <TabsTrigger value="notes">Notes</TabsTrigger>
+                                    {userRole === 'ADMIN' && <TabsTrigger value="tasks">Tasks</TabsTrigger>}
+                                    {userRole === 'ADMIN' && <TabsTrigger value="notes">Notes</TabsTrigger>}
                                 </TabsList>
                                 <TabsContent value="messages"><Messages startupId={params.id}/></TabsContent>
-                                <TabsContent value="tasks"><Tasks startupId={params.id}/></TabsContent>
-                                <TabsContent value="notes"><Notes startupId={params.id}/></TabsContent>
+                                {userRole === 'ADMIN' && <TabsContent value="tasks"><Tasks startupId={params.id}/></TabsContent>}
+                                {userRole === 'ADMIN' && <TabsContent value="notes"><Notes startupId={params.id}/></TabsContent>}
                             </Tabs>
                         </div>
                     </div>
