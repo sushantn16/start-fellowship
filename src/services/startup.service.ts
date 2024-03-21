@@ -67,3 +67,19 @@ export async function getStartupById(id: number) {
     const data = await response.json();
     return data;
 }
+
+export async function getStartupByUserId() {
+    const response = await fetch('/api/startupbyuser', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        toast.error('Failed to fetch startup');
+    }
+
+    const data = await response.json();
+    return data;
+}

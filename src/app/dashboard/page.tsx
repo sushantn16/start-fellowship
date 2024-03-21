@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
 import { getUser } from "@/services/auth.service";
 import UserView from "@/components/userView";
-import { getStartup } from "@/services/startup.service";
+import { getStartup, getStartupByUserId } from "@/services/startup.service";
 
 interface Startup {
     id: number;
@@ -35,7 +35,13 @@ export default function Dashboard({ params }: { params: { id: number } }) {
         };
         const fetchStartupData = async () => {
             try {
-                const startupData = await getStartup();
+                let startupData
+                console.log('userRole:', userRole)
+                if (userRole === 'ADMIN') {
+                    startupData = await getStartup();
+                } else {
+                    startupData = await getStartupByUserId();
+                }
                 setStartups(startupData);
             } catch (error) {
                 console.error('Error fetching startup data:', error);
@@ -43,8 +49,11 @@ export default function Dashboard({ params }: { params: { id: number } }) {
         };
 
         fetchUser();
-        fetchStartupData();
-    }, []);
+        if (userRole) {
+            fetchStartupData();
+        }
+
+    }, [userRole]);
 
     const handleRowClick = (id: number) => {
         router.push(`/dashboard/${id}`);
@@ -54,7 +63,7 @@ export default function Dashboard({ params }: { params: { id: number } }) {
         <div className="grid lg:grid-cols-[250px_1fr] min-h-screen w-full lg:min-h-0">
             <Sidebar />
             <div className="flex flex-col">
-                <DashboardHeader search={false}/>
+                <DashboardHeader search={true} />
                 <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
                     <div>
                         {userRole === 'USER' && <UserView />}
