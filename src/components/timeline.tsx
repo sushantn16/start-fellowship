@@ -44,42 +44,47 @@ export default function Timeline({ startupId }: MilestoneProps) {
 
     return (
         <div className="w-full max-w-3xl">
-            <div className="relative w-px h-full bg-gray-200 dark:bg-gray-800">
-                <div className="absolute w-4 h-4 transform -translate-x-2 -translate-y-2 top-0 left-1/2 -translate-x-1/2 rounded-full border-2 border-gray-200 dark:border-gray-800 bg-gray-200 dark:bg-gray-800" />
-                <div className="absolute w-4 h-4 bottom-0 left-1/2 -translate-x-1/2 rounded-full border-2 border-gray-200 dark:border-gray-800 bg-gray-200 dark:bg-gray-800" />
-                <div className="flex flex-col gap-4 px-4 py-2">
-                    {milestones.map((milestone: Milestone, index: number) => (
-                        <Milestone key={index} title={milestone.title} description={milestone.description} />
-                    ))}
-
-                    <Dialog open={isDialogOpen} onOpenChange={onDialogChange}>
-                        <DialogTrigger>
-                            Add Event
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Add Event</DialogTitle>
-                            </DialogHeader>
-                            <div className="flex flex-col gap-2">
-                                <Input
-                                    type="text"
-                                    placeholder="Enter milestone title"
-                                    value={newMilestoneTitle}
-                                    onChange={(e) => setNewMilestoneTitle(e.target.value)}
-                                />
-                                <Input
-                                    type="text"
-                                    placeholder="Enter milestone description"
-                                    value={newMilestoneDescription}
-                                    onChange={(e) => setNewMilestoneDescription(e.target.value)}
-                                />
-                                <Button onClick={handleMilestoneSubmit}>Add Milestone</Button>
-                            </div>
-                        </DialogContent>
-                    </Dialog>
-
+            {milestones &&
+                <div className="relative w-px h-full bg-gray-200 dark:bg-gray-800">
+                    <div className="absolute w-4 h-4 transform -translate-x-2 -translate-y-2 top-0 left-1/2 -translate-x-1/2 rounded-full border-2 border-gray-200 dark:border-gray-800 bg-gray-200 dark:bg-gray-800" />
+                    <div className="absolute w-4 h-4 bottom-0 left-1/2 -translate-x-1/2 rounded-full border-2 border-gray-200 dark:border-gray-800 bg-gray-200 dark:bg-gray-800" />
+                    <div className="flex flex-col gap-4 px-4 py-2">
+                        {milestones.map((milestone: Milestone, index: number) => (
+                            <Milestone key={index} title={milestone.title} description={milestone.description} />
+                        ))}
+                    </div>
                 </div>
-            </div>
+            }
+
+            <Dialog open={isDialogOpen} onOpenChange={onDialogChange}>
+                <div className="w-full flex justify-end">
+                    <Button onClick={onDialogChange}>Add Milestone</Button>
+                </div>
+
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Add Event</DialogTitle>
+                    </DialogHeader>
+                    <div className="flex flex-col gap-2">
+                        <Input
+                            type="text"
+                            placeholder="Enter milestone title"
+                            value={newMilestoneTitle}
+                            onChange={(e) => setNewMilestoneTitle(e.target.value)}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Enter milestone description"
+                            value={newMilestoneDescription}
+                            onChange={(e) => setNewMilestoneDescription(e.target.value)}
+                        />
+                        <Button onClick={handleMilestoneSubmit}>Add Milestone</Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
+
+
         </div>
     );
 }

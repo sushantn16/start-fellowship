@@ -1,4 +1,3 @@
-
 export async function createMilestone(title:string, description:string, startupId:number){
     const response = await fetch('/api/milestone', {
         method: 'POST',
