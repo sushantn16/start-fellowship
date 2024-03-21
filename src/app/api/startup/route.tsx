@@ -1,11 +1,20 @@
 import { PrismaClient } from '@prisma/client'
 import { NextResponse, NextRequest } from 'next/server';
-const prisma = new PrismaClient()
+import { getUser } from '@/lib/jwtTokenControl';
+const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
     const data = await req.json();
     
-    const { name, website, founder, description, city, country, stage, userId } = data;
+    const { name, website, founder, description, city, country, stage } = data;
+    let token = req.cookies.get('token')?.value || '';
+
+    const user = await getUser(token);
+
+    if (!user || !user.userId || typeof user.userId !== 'number') {
+        return NextResponse.json(new Error('Invalid userId'), { status: 500 });
+    }
+
     const startup = await prisma.startup.create({
         data: {
             name,
@@ -16,10 +25,11 @@ export async function POST(req: NextRequest) {
             country,
             stage,
             users: {
-                connect: { id: userId }
+                connect: { id: user.userId }
             }
         }
     });
+
     return NextResponse.json(startup, { status: 201 });
 }
 

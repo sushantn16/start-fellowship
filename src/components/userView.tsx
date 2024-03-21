@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { createStartup } from '@/services/startup.service';
 
 export default function UserView() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -18,10 +19,21 @@ export default function UserView() {
         setIsDialogOpen(!isDialogOpen);
     };
 
-    const handleSubmit = (e:React.SyntheticEvent) => {
+    const handleSubmit = async (e:React.SyntheticEvent) => {
         e.preventDefault();
         // Here you can implement the logic to create a new startup with the provided data
         console.log('Creating startup:', startupName, startupWebsite, startupFounder, startupDescription, startupCity, startupCountry, startupStage);
+
+        const newStartup = await createStartup(
+            startupName,
+            startupWebsite,
+            startupFounder,
+            startupDescription,
+            startupCity,
+            startupCountry,
+            startupStage
+        );
+
         // Reset the form fields after submission
         setStartupName('');
         setStartupWebsite('');
