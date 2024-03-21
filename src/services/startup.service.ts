@@ -7,6 +7,7 @@ interface Startup {
     country: string;
     stage: string;
 }
+import { toast } from "sonner";
 
 export async function createStartup(
     name: string,
@@ -26,10 +27,11 @@ export async function createStartup(
     });
 
     if (!response.ok) {
-        throw new Error('Failed to create startup');
+        toast.error('Failed to create startup');
     }
 
     const res: Startup = await response.json();
+    toast.success('Startup created successfully');
     return res;
 }
 
@@ -42,7 +44,7 @@ export async function getStartup(): Promise<Startup[]> {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to fetch statups');
+        toast.error('Failed to fetch startup');
     }
 
     const data: Startup[] = await response.json();

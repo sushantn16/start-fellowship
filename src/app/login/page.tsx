@@ -15,13 +15,11 @@ import { login, register } from '@/services/auth.service';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
-  // Initialize form objects
   const [loginForm, setLoginForm] = useState({ email: '', password: '', emailError: '', passwordError: '' });
   const [signupForm, setSignupForm] = useState({ name: '', email: '', password: '', confirmPassword: '', role: 'USER', nameError: '', emailError: '', passwordError: '', confirmPasswordError: '' });
   const validateForm = (form:any) => {
     let isValid = true;
 
-    // Check for empty fields and set error messages
     for (const key in form) {
       if (form[key] === '' && !key.includes('Error')) {
         form[`${key}Error`] = `${key[0].toUpperCase() + key.slice(1)} is required`;

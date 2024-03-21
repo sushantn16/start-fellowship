@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 interface Event {
     id: string;
     title: string;
@@ -20,6 +22,7 @@ export async function createEvent(title: string, description: string, location: 
     }
 
     const data: Event = await response.json();
+    toast
     return data;
 }
 
@@ -53,5 +56,6 @@ export async function enrollUser(eventId: string, userId: string): Promise<Event
     }
 
     const data: Event = await response.json();
+    toast.success('Enrolled in event');
     return data;
 }

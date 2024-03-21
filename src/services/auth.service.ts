@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 export async function login(email: string, password: string) {
     const response = await fetch('/api/login', {
         method: 'POST',
@@ -10,8 +11,9 @@ export async function login(email: string, password: string) {
     if (!response.ok) {
         throw new Error('Login failed');
     }
-
+    toast.success('Login Seccessful');
     const data = await response.json();
+
     return data;
 }
 
@@ -25,6 +27,7 @@ export async function getUser() {
     }
 
     const data = await response.json();
+
     return data;
 }
 
@@ -40,7 +43,7 @@ export async function register(name: string, email: string, password: string, ro
     if (!response.ok) {
         throw new Error('Registration failed');
     }
-
+    toast.success('Registered Seccessful');
     const data = await response.json();
     return data;
 }
@@ -56,4 +59,5 @@ export async function logout() {
     if (!response.ok) {
         throw new Error('Logout failed');
     }
+    toast.success('Logout Seccessful');
 }
