@@ -8,15 +8,20 @@ export async function POST(req: NextRequest) {
     const prisma = new PrismaClient()
     const hashedPassword: string = await hashPassword(password);
 
-    const newUser = await prisma.user.create({
-        data: {
-            name: name,
-            email: email,
-            password: hashedPassword,
-            role: role,
-        },
-    });
-
-    const token: string = generateToken(newUser);
-    NextResponse.json({ token }, { status: 200 });
+    try {
+        const newUser = await prisma.user.create({
+            data: {
+                name: name,
+                email: email,
+                password: hashedPassword,
+                role: role,
+            },
+        });
+        const token: string = generateToken(newUser);
+        
+        return NextResponse.json({ token: token }, { status: 200 });
+    } catch (error) {
+        console.log(error);
+        return new Response("Signup Failed", { status: 500 });
+    }
 }
