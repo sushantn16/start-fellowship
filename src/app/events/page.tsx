@@ -7,11 +7,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { createEvent } from '@/services/event.service';
+import { createEvent, getEvents } from '@/services/event.service';
 import { getUser } from '@/services/auth.service';
 
 export default function Event() {
     const router = useRouter();
+    const [events, setEvents] = useState<any[]>([]);
 
     const [eventName, setEventName] = useState('');
     const [eventLocation, setEventLocation] = useState('');
@@ -30,18 +31,19 @@ export default function Event() {
             }
         };
 
+        const fetchEvents = async () => {
+            const events = await getEvents();
+            setEvents(events);
+        }
+
+
         fetchUser();
+        fetchEvents();
     }, []);
 
     const handleRowClick = (id: number) => {
         router.push(`/events/${id}`);
     };
-
-    const sampleData = [
-        { id: 1, name: "Event 1", location: "New York, NY", date: "Mar 25, 2024" },
-        { id: 2, name: "Event 2", location: "London, United Kingdom", date: "Apr 10, 2024" },
-        { id: 3, name: "Event 3", location: "Berlin, Germany", date: "May 5, 2024" },
-    ];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -78,7 +80,7 @@ export default function Event() {
                 <DashboardHeader search={true} />
                 <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
                     <div className="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-8">
-                        {sampleData.map((event) => (
+                        {events.map((event) => (
                             <div key={event.id} className="relative group" onClick={() => handleRowClick(event.id)}>
                                 <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md transition-transform transform-gpu group-hover:scale-105">
                                     <h3 className="font-semibold">{event.name}</h3>

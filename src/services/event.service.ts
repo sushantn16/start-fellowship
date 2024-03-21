@@ -26,7 +26,7 @@ export async function createEvent(title: string, description: string, location: 
     return data;
 }
 
-export async function getEvents(): Promise<Event[]> {
+export async function getEvents(){
     const response = await fetch('/api/events', {
         method: 'GET',
         headers: {
@@ -38,7 +38,7 @@ export async function getEvents(): Promise<Event[]> {
         throw new Error('Failed to fetch events');
     }
 
-    const data: Event[] = await response.json();
+    const data = await response.json();
     return data;
 }
 
