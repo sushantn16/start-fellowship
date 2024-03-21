@@ -4,13 +4,21 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { getNotes, createNote } from "@/services/notes.service";
 
+interface Note {
+    id: number;
+    content: string;
+    createdAt: string; // Update this according to your data type
+    updatedAt: string; // Update this according to your data type
+    startupId: number;
+}
+
 interface NotesProps {
     startupId: number;
 }
 
 export default function Notes({ startupId }: NotesProps) {
     const [note, setNote] = useState('');
-    const [notes, setNotes] = useState([]);
+    const [notes, setNotes] = useState<Note[]>([]);;
 
     const fetchNotes = async () => {
         const notesData = await getNotes(startupId);
@@ -35,7 +43,7 @@ export default function Notes({ startupId }: NotesProps) {
             <h1>Notes</h1>
             <div>
                 {notes.map((note, index) => (
-                    <div key={index}>{note}</div>
+                    <div key={index}>{note.content}</div>
                 ))}
             </div>
             <div className="flex space-x-2">
