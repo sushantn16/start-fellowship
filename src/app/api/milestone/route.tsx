@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
             title: data.title,
             description: data.description,
             startup: {
-                 connect: { id: data.userId }
+                 connect: { id: parseInt(data.startupId) }
             }
         }
     });
