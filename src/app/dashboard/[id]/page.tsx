@@ -79,8 +79,8 @@ export default function DashboardDetail({ params }: { params: { id: number } }) 
                                     <TabsTrigger value="notes">Notes</TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="messages"><Messages startupId={params.id}/></TabsContent>
-                                <TabsContent value="tasks"><Tasks/></TabsContent>
-                                <TabsContent value="notes"><Notes /></TabsContent>
+                                <TabsContent value="tasks"><Tasks startupId={params.id}/></TabsContent>
+                                <TabsContent value="notes"><Notes startupId={params.id}/></TabsContent>
                             </Tabs>
                         </div>
                     </div>

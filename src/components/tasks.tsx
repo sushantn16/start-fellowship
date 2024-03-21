@@ -1,42 +1,62 @@
-'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { createTask, updateTask, getTasks } from "@/services/task.service";
 
 interface Task {
-    text: string;
+    id: number;
+    name: string;
     completed: boolean;
 }
 
-export default function Tasks(){
+interface TasksProps {
+    startupId: number;
+}
+
+export default function Tasks({ startupId }: TasksProps) {
     const [task, setTask] = useState<string>('');
     const [tasks, setTasks] = useState<Task[]>([]);
 
-    const handleTaskAdd = () => {
+    const handleTaskAdd = async () => {
         if (task.trim() !== '') {
-            setTasks([...tasks, { text: task, completed: false }]);
-            setTask('');
+                const newTask = await createTask(task, startupId);
+                setTasks([...tasks, newTask]);
+                setTask('');
         }
     };
 
-    const handleTaskToggle = (index: number) => {
-        const updatedTasks = [...tasks];
-        updatedTasks[index].completed = !updatedTasks[index].completed;
+    const handleTaskToggle = async (id: number) => {
+        const updatedTasks = tasks.map(task => {
+            if (task.id === id) {
+                return { ...task, completed: !task.completed };
+            }
+            return task;
+        });
         setTasks(updatedTasks);
+            await updateTask(id);
     };
 
-    return(
+    useEffect(() => {
+        // Fetch tasks when component mounts
+        const fetchTasks = async () => {
+                const tasksData = await getTasks(startupId);
+                setTasks(tasksData);
+        };
+
+        fetchTasks();
+    }, [startupId]);
+    return (
         <div>
             <h1>Tasks</h1>
             <div>
                 {tasks.map((task, index) => (
-                    <div key={index} className="flex items-center space-x-2">
+                    <div key={task.id} className="flex items-center space-x-2">
                         <input
                             type="checkbox"
                             checked={task.completed}
-                            onChange={() => handleTaskToggle(index)}
+                            onChange={() => handleTaskToggle(task.id)}
                         />
-                        <span className={task.completed ? 'line-through' : ''}>{task.text}</span>
+                        <span className={task.completed ? 'line-through' : ''}>{task.name}</span>
                     </div>
                 ))}
             </div>
@@ -44,10 +64,10 @@ export default function Tasks(){
                 <Input
                     placeholder="Type a task"
                     value={task}
-                    onChange={(e)=>setTask(e.target.value)}
+                    onChange={(e) => setTask(e.target.value)}
                 />
                 <Button onClick={handleTaskAdd}>Add</Button>
             </div>
         </div>
-    );
+    )
 }

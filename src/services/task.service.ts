@@ -34,3 +34,24 @@ export async function getTasks(startupId:number){
     const data = await response.json();
     return data;
 }
+
+export async function updateTask(id:number){
+    const response = await fetch('/api/task', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            status: true
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to create message');
+    }
+
+    const data = await response.json();
+    return data;
+
+}

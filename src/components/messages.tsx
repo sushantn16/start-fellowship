@@ -25,7 +25,6 @@ export default function Messages({ startupId }: MessagesProps) {
         if (message.trim() !== '') {
                 await createMessage(message, startupId);
                 setMessage('');
-                // After sending the message, fetch updated messages
                 fetchMessages();
         }
     };
