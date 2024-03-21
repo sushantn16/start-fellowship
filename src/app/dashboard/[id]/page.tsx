@@ -59,7 +59,7 @@ export default function DashboardDetail({ params }: { params: { id: number } }) 
                         <div className="space-y-4">
                             <div className="grid grid-cols-2 items-start gap-4">
                                 <div className="space-y-2">
-                                    <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{startup.title}</h1>
+                                    <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{startup.name}</h1>
                                     <div className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
                                         <MapPinIcon className="h-4 w-4" />
                                         {startup.city}, {startup.country}
