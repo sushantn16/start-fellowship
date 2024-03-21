@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { createStartup } from '@/services/startup.service';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 export default function UserView() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -83,8 +84,16 @@ export default function UserView() {
                         <Input type="text" id="startupCountry" name="startupCountry" value={startupCountry} onChange={(e) => setStartupCountry(e.target.value)} placeholder="Enter startup country" required />
 
                         <Label htmlFor="startupStage">Stage</Label>
-                        <Input type="text" id="startupStage" name="startupStage" value={startupStage} onChange={(e) => setStartupStage(e.target.value)} placeholder="Enter startup stage" required />
-
+                        <Select defaultValue="IDEA" value={startupStage} onValueChange={(value) => setStartupStage(value)}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Stage" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="IDEA">Idea</SelectItem>
+                              <SelectItem value="DEVELOPMENT">Development</SelectItem>
+                              <SelectItem value="LAUNCH">Launch</SelectItem>
+                            </SelectContent>
+                          </Select>
                         <div className="flex justify-end">
                             <Button type="submit">Create Startup</Button>
                         </div>
