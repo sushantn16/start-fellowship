@@ -16,7 +16,7 @@ import { login, register } from '@/services/auth.service';
 export default function Login() {
   // Initialize form objects
   const [loginForm, setLoginForm] = useState({ email: '', password: '', emailError: '', passwordError: '' });
-const [signupForm, setSignupForm] = useState({ name: '', email: '', password: '', confirmPassword: '', role: 'startup', nameError: '', emailError: '', passwordError: '', confirmPasswordError: '' });
+const [signupForm, setSignupForm] = useState({ name: '', email: '', password: '', confirmPassword: '', role: 'STARTUP', nameError: '', emailError: '', passwordError: '', confirmPasswordError: '' });
   const validateForm = (form:any) => {
     let isValid = true;
 
@@ -59,7 +59,7 @@ const handleSignup = async () => {
             signupForm.name,
             signupForm.email,
             signupForm.password,
-            signupForm.confirmPassword
+            signupForm.role
         );
     }
 };
@@ -115,9 +115,9 @@ const handleSignup = async () => {
                               <SelectValue placeholder="startup" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="admin">Admin</SelectItem>
-                              <SelectItem value="mentor">Mentor</SelectItem>
-                              <SelectItem value="startup">Startup</SelectItem>
+                              <SelectItem value="ADMIN">Admin</SelectItem>
+                              <SelectItem value="MENTOR">Mentor</SelectItem>
+                              <SelectItem value="STARUP">Startup</SelectItem>
                             </SelectContent>
                           </Select>
                       </div>

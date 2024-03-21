@@ -18,5 +18,5 @@ export async function POST(req: NextRequest) {
     });
 
     const token: string = generateToken(newUser);
-    NextResponse.json({ token });
+    NextResponse.json({ token }, { status: 200 });
 }
