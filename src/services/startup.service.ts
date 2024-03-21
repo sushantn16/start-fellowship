@@ -53,7 +53,7 @@ export async function getStartup() {
 }
 
 export async function getStartupById(id: number) {
-    const response = await fetch(`/api/startup/${id}`, {
+    const response = await fetch(`/api/startupbyid/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
