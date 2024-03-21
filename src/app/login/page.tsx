@@ -50,7 +50,7 @@ const handleLogin = async () => {
 
     if (validation.isValid) {
         const res = await login(loginForm.email, loginForm.password);
-        router.push('/dashboard')
+        router.push('/dashboard');
     }
 };
 
@@ -59,12 +59,14 @@ const handleSignup = async () => {
     setSignupForm(validation.form);
 
     if (validation.isValid) {
-        const res = await register(
+        const registerResponse = await register(
             signupForm.name,
             signupForm.email,
             signupForm.password,
             signupForm.role
         );
+        const loginResponse = await login(signupForm.email, signupForm.password);
+        router.push('/dashboard');
     }
 };
 

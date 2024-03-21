@@ -10,13 +10,11 @@ interface CustomJwtPayload extends JwtPayload {
 
 export default function authMiddleware(handler: (req: NextRequest, res: NextResponse) => void) {
   return async (req: NextRequest, res: NextResponse) => {
-    console.log(req)
     const token = req.cookies.get('token')?.value || '';
 
     const decodedToken = jwt.verify(token, APP_SECRET) as CustomJwtPayload;
 
     if (req.nextUrl.pathname.startsWith('/dashboard')) {
-      console.log(decodedToken)
       if (!decodedToken) {
         return NextResponse.json(
           { success: false, message: 'You need privileges to perform this action.' },
