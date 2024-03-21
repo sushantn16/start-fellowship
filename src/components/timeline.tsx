@@ -57,7 +57,7 @@ export default function Timeline({ startupId }: MilestoneProps) {
             }
 
             <Dialog open={isDialogOpen} onOpenChange={onDialogChange}>
-                <div className="w-full flex justify-end">
+                <div className="w-full flex justify-start mx-10">
                     <Button onClick={onDialogChange}>Add Milestone</Button>
                 </div>
 
