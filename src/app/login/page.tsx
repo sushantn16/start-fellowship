@@ -69,7 +69,7 @@ const handleSignup = async () => {
 };
 
   return (
-      <div className="flex justify-center">
+      <div className="flex justify-center p-24">
           <Tabs defaultValue="login" className="w-[400px]">
             <TabsList className="flex justify-center">
               <TabsTrigger value="login">Login</TabsTrigger>

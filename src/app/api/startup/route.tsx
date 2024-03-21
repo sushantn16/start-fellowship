@@ -33,16 +33,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(startup, { status: 201 });
 }
 
-export async function GET(req: NextRequest & { query: { userId: number } }) {
-    const { userId } = req.query;
-    const userStartups = await prisma.startup.findMany({
-        where: {
-            users: {
-                some: {
-                    id: userId
-                }
-            }
-        }
-    });
+export async function GET() {
+    const userStartups = await prisma.startup.findMany();
     return NextResponse.json(userStartups);
 }

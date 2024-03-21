@@ -1,5 +1,4 @@
 'use client'
-
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table";
 import Sidebar from "@/components/sidebar";
 import DashboardHeader from "@/components/dashboardHeader";
@@ -7,9 +6,22 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
 import { getUser } from "@/services/auth.service";
 import UserView from "@/components/userView";
+import { getStartup } from "@/services/startup.service";
+
+interface Startup {
+    id: number;
+    name: string;
+    website: string;
+    founder: string;
+    description: string;
+    city: string;
+    country: string;
+    stage: string;
+}
 
 export default function Dashboard({ params }: { params: { id: number } }) {
     const [userRole, setUserRole] = useState<string | null>(null);
+    const [startups, setStartups] = useState<Startup[]>([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -21,17 +33,18 @@ export default function Dashboard({ params }: { params: { id: number } }) {
                 console.error('Error fetching user data:', error);
             }
         };
+        const fetchStartupData = async () => {
+            try {
+                const startupData = await getStartup();
+                setStartups(startupData);
+            } catch (error) {
+                console.error('Error fetching startup data:', error);
+            }
+        };
 
         fetchUser();
+        fetchStartupData();
     }, []);
-
-    const sampleData = [
-        { id: 1, startup: "Acme Inc", location: "San Francisco, CA", stage: "Series A" },
-        { id: 2, startup: "Bolt", location: "New York, NY", stage: "Seed" },
-        { id: 3, startup: "Crisp", location: "London, United Kingdom", stage: "Pre-Seed" },
-        { id: 4, startup: "Dusk", location: "Berlin, Germany", stage: "Series B" },
-        { id: 5, startup: "Ember", location: "Oslo, Norway", stage: "Seed" },
-    ];
 
     const handleRowClick = (id: number) => {
         router.push(`/dashboard/${id}`);
@@ -57,12 +70,12 @@ export default function Dashboard({ params }: { params: { id: number } }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {sampleData.map((data) => (
-                                    <TableRow key={data.id} onClick={() => handleRowClick(data.id)} className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
-                                        <TableCell>{data.id}</TableCell>
-                                        <TableCell className="font-medium">{data.startup}</TableCell>
-                                        <TableCell className="hidden md:table-cell">{data.location}</TableCell>
-                                        <TableCell className="hidden md:table-cell">{data.stage}</TableCell>
+                                {startups.map((startup) => (
+                                    <TableRow key={startup.id} onClick={() => handleRowClick(startup.id)} className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        <TableCell>{startup.id}</TableCell>
+                                        <TableCell className="font-medium">{startup.name}</TableCell>
+                                        <TableCell className="hidden md:table-cell">{startup.country}</TableCell>
+                                        <TableCell className="hidden md:table-cell">{startup.stage}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

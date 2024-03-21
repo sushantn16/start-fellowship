@@ -35,7 +35,7 @@ export async function createStartup(
     return res;
 }
 
-export async function getStartup(): Promise<Startup[]> {
+export async function getStartup() {
     const response = await fetch('/api/startup', {
         method: 'GET',
         headers: {
@@ -47,6 +47,6 @@ export async function getStartup(): Promise<Startup[]> {
         toast.error('Failed to fetch startup');
     }
 
-    const data: Startup[] = await response.json();
+    const data = await response.json();
     return data;
 }

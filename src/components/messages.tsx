@@ -45,7 +45,8 @@ export default function Messages({ startupId }: MessagesProps) {
             <div className="space-y-4">
                 
                 {messages.map((msg: any, index: any) => (
-                    <div key={index} className={`bg-gray-${user && user === msg.userId ? '100' : '200'} p-4 rounded-md`}>
+                    
+                    <div key={index} className={`${ user == msg.userId ? 'bg-gray-100' : 'bg-gray-400'} p-4 rounded-md`}>
                         <p className="text-gray-800">{msg.content}</p>
                     </div>
                 ))}
