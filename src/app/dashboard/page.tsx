@@ -41,7 +41,7 @@ export default function Dashboard({ params }: { params: { id: number } }) {
         <div className="grid lg:grid-cols-[250px_1fr] min-h-screen w-full lg:min-h-0">
             <Sidebar />
             <div className="flex flex-col">
-                <DashboardHeader />
+                <DashboardHeader search={false}/>
                 <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
                     <div>
                         {userRole === 'USER' && <UserView />}

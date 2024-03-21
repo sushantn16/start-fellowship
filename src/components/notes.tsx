@@ -1,4 +1,3 @@
-'use client'
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -18,7 +17,7 @@ interface NotesProps {
 
 export default function Notes({ startupId }: NotesProps) {
     const [note, setNote] = useState('');
-    const [notes, setNotes] = useState<Note[]>([]);;
+    const [notes, setNotes] = useState<Note[]>([]);
 
     const fetchNotes = async () => {
         const notesData = await getNotes(startupId);
@@ -27,32 +26,34 @@ export default function Notes({ startupId }: NotesProps) {
 
     const handleNoteSend = async () => {
         await createNote(note, startupId);
-        setNote(''); 
+        setNote('');
         fetchNotes();
     };
 
-
-
     useEffect(() => {
-
         fetchNotes();
     }, [startupId]);
 
     return (
-        <div>
-            <h1>Notes</h1>
-            <div>
+        <div className="p-4 bg-white shadow-md rounded-md">
+            <h1 className="text-2xl font-semibold mb-4">Notes</h1>
+            <div className="space-y-4">
                 {notes.map((note, index) => (
-                    <div key={index}>{note.content}</div>
+                    <div key={index} className="bg-gray-100 p-4 rounded-md">
+                        <p className="text-gray-800">{note.content}</p>
+                    </div>
                 ))}
             </div>
-            <div className="flex space-x-2">
+            <div className="mt-4 flex items-center space-x-2">
                 <Input
                     placeholder="Type a note"
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
+                    className="flex-1"
                 />
-                <Button onClick={handleNoteSend}>Save Note</Button>
+                <Button onClick={handleNoteSend}>
+                    Save Note
+                </Button>
             </div>
         </div>
     );

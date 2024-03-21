@@ -20,6 +20,7 @@ model User {
   updatedAt DateTime  @updatedAt
   startups  Startup[]
   events    Event[]
+  messages  Message[] // 1-n relation to Message
 }
 
 model Startup {
@@ -57,6 +58,8 @@ model Message {
   updatedAt DateTime @updatedAt
   startupId Int
   startup   Startup  @relation(fields: [startupId], references: [id])
+  userId    Int // Add this field to link to the User model
+  user      User     @relation(fields: [userId], references: [id]) // Define the relation
 }
 
 model Note {

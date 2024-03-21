@@ -60,7 +60,7 @@ export default function Event() {
         <div className="grid lg:grid-cols-[250px_1fr] min-h-screen w-full lg:min-h-0">
             <Sidebar />
             <div className="flex flex-col">
-                <DashboardHeader />
+                <DashboardHeader search={true} />
                 <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
                     <div className="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-8">
                         {sampleData.map((event) => (

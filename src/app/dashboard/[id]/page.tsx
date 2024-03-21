@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { getUser } from "@/services/auth.service"
 import Timeline from "@/components/timeline"
 import Files from "@/components/files"
+import DashboardHeader from "@/components/dashboardHeader"
 
 
 export default function DashboardDetail({ params }: { params: { id: number } }) {
@@ -34,6 +35,7 @@ export default function DashboardDetail({ params }: { params: { id: number } }) 
         <div className="grid lg:grid-cols-[250px_1fr] min-h-screen w-full lg:min-h-0">
             <Sidebar />
             <div className="flex flex-col">
+                                <DashboardHeader search={false} />
                 <div className="mx-auto px-12 py-4 grid gap-4">
                     <div className="flex items-center gap-4">
                         <Link
@@ -94,7 +96,7 @@ export default function DashboardDetail({ params }: { params: { id: number } }) 
                         <Timeline startupId={params.id}/>
                         <div className="border rounded-lg p-4">
                             <Tabs defaultValue="messages" className="w-[400px]">
-                                <TabsList>
+                                <TabsList className="">
                                     <TabsTrigger value="messages">Messages</TabsTrigger>
                                     {userRole === 'ADMIN' && <TabsTrigger value="tasks">Tasks</TabsTrigger>}
                                     {userRole === 'ADMIN' && <TabsTrigger value="notes">Notes</TabsTrigger>}

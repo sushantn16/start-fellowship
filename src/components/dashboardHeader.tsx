@@ -5,8 +5,11 @@ import { SearchIcon } from "lucide-react"
 import { logout } from "@/services/auth.service"
 import { useRouter } from "next/navigation"
 
+interface dashboardHeaderProps{
+    search: boolean
+}
 
-export default function DashboardHeader() {
+export default function DashboardHeader({search}: dashboardHeaderProps) {
 
     const router = useRouter();
 
@@ -19,6 +22,7 @@ export default function DashboardHeader() {
     return (
         <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
             <div className="w-full flex-1">
+                            {search &&
                 <form>
                     <div className="relative">
                         <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
@@ -28,7 +32,7 @@ export default function DashboardHeader() {
                             type="search"
                         />
                     </div>
-                </form>
+                </form>}
             </div>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -53,9 +57,6 @@ export default function DashboardHeader() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuItem>Support</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
