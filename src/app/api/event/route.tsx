@@ -1,3 +1,4 @@
+import { getUser } from '@/lib/jwtTokenControl';
 import { PrismaClient } from '@prisma/client';
 import { NextResponse, NextRequest } from 'next/server';
 
@@ -23,12 +24,19 @@ export async function GET() {
 }
 
 export async function PATCH(req: NextRequest) {
-    const { eventId, userId } = await req.json();
+    const { eventId } = await req.json();
+    let token = req.cookies.get('token')?.value || '';
+
+    const user = await getUser(token);
+
+    if (!user || !user.userId || typeof user.userId !== 'number') {
+        return NextResponse.json(new Error('Invalid userId'), { status: 500 });
+    }
     const event = await prisma.event.update({
         where: { id: eventId },
         data: {
             users: {
-                connect: { id: userId }
+                connect: { id: user.userId }
             }
         }
     });

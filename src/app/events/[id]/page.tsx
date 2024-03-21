@@ -1,9 +1,32 @@
+'use client'
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Sidebar from "@/components/sidebar"
 import { ArrowLeftIcon, MapPinIcon } from "lucide-react"
+import { useEffect, useState } from "react";
+import { getUser } from "@/services/auth.service";
+import { enrollUser } from "@/services/event.service"
 
 export default function Component({ params }: { params: { id: number } }) {
+
+    const [userRole, setUserRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const resp = await getUser();
+                setUserRole(resp.user.role);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUser();
+    }, []);
+
+    const handleRSVP = async () => {
+            await enrollUser(params.id);
+    }
     return (
         <div className="grid lg:grid-cols-[250px_1fr] min-h-screen w-full lg:min-h-0">
             <Sidebar />
@@ -62,9 +85,11 @@ export default function Component({ params }: { params: { id: number } }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full grid justify-end items-end p-4">
-                            <Button type="submit">RSVP</Button>
-                        </div>
+                        {userRole === 'USER' &&
+                            <div className="w-full grid justify-end items-end p-4">
+                                <Button type="submit" onClick={handleRSVP}>RSVP</Button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

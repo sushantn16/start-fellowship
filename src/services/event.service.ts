@@ -42,13 +42,13 @@ export async function getEvents(): Promise<Event[]> {
     return data;
 }
 
-export async function enrollUser(eventId: string, userId: string): Promise<Event> {
+export async function enrollUser(eventId: number): Promise<Event> {
     const response = await fetch('/api/events/enroll', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ eventId, userId })
+        body: JSON.stringify({ eventId })
     });
 
     if (!response.ok) {

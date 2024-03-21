@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
                  connect: { id: parseInt(data.startupId) }
             },
             user: {
-                connect: { id: user.userId }
+                connect: {id: user.userId}
             }
         }
     });
