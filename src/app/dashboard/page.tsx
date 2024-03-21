@@ -11,17 +11,17 @@ export default function Dashboard() {
     const router = useRouter();
 
     useEffect(() => {
-            const fetchUser = async () => {
-                try {
-                    const user = await getUser();
-                    console.log(user);
-                } catch (error) {
-                    console.error('Error fetching user data:', error);
-                }
-            };
-    
-            fetchUser();
-        }, []);
+        const fetchUser = async () => {
+            try {
+                const user = await getUser();
+                console.log(user);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUser();
+    }, []);
 
     const sampleData = [
         { id: 1, startup: "Acme Inc", location: "San Francisco, CA", stage: "Series A" },
@@ -31,7 +31,7 @@ export default function Dashboard() {
         { id: 5, startup: "Ember", location: "Oslo, Norway", stage: "Seed" },
     ];
 
-    const handleRowClick = (id:number) => {
+    const handleRowClick = (id: number) => {
         router.push(`/dashboard/${id}`);
     };
 
