@@ -82,10 +82,10 @@ model Event {
   id          Int      @id @default(autoincrement())
   title       String
   description String
-  location    String   // New field for event location
+  location    String // New field for event location
   date        DateTime // New field for event date
   createdAt   DateTime @default(now())
-  users       User[]   // Many-to-many relation with User
+  users       User[] // Many-to-many relation with User
 }
 
 enum Role {
