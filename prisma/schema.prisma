@@ -11,17 +11,87 @@ datasource db {
 }
 
 model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  startups  Startup[]
+}
+
+model Startup {
+  id          Int         @id @default(autoincrement())
+  name        String
+  website     String
+  founder     String
+  description String
+  location    Location    @relation(fields: [locationId], references: [id])
+  stage       Stage
+  tasks       Task[] // 1-n relation to Task
+  messages    Message[] // 1-n relation to Message
+  notes       Note[] // 1-n relation to Note
+  milestones  Milestone[] // 1-n relation to Milestone
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  locationId  Int
+  users       User[] // Many-to-many relation with User
+}
+
+model Task {
   id        Int      @id @default(autoincrement())
   name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  done      Boolean  @default(false)
+  startupId Int
+  startup   Startup  @relation(fields: [startupId], references: [id])
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  startupId Int
+  startup   Startup  @relation(fields: [startupId], references: [id])
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  startupId Int
+  startup   Startup  @relation(fields: [startupId], references: [id])
+}
+
+model Milestone {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  startupId   Int
+  startup     Startup  @relation(fields: [startupId], references: [id])
+}
+
+model Location {
+  id       Int       @id @default(autoincrement())
+  city     String
+  country  String
+  startups Startup[]
 }
 
 enum Role {
   USER
   MENTOR
   ADMIN
+}
+
+enum Stage {
+  IDEA
+  DEVELOPMENT
+  LAUNCH
 }
