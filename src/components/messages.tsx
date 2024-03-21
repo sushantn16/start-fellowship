@@ -16,7 +16,7 @@ export default function Messages({ startupId }: MessagesProps) {
     useEffect(() => {
         const fetchUser = async () => {
             const userResponse = await getUser();
-            setUser(userResponse.user);
+            setUser(userResponse.user.id);
         };
 
         fetchUser();
@@ -43,8 +43,9 @@ export default function Messages({ startupId }: MessagesProps) {
         <div className="p-4 bg-white shadow-md rounded-md">
             <h1 className="text-2xl font-semibold mb-4">Messages</h1>
             <div className="space-y-4">
+                
                 {messages.map((msg: any, index: any) => (
-                    <div key={index} className={`bg-gray-${user && user?.id === msg.userId ? '100' : '200'} p-4 rounded-md`}>
+                    <div key={index} className={`bg-gray-${user && user === msg.userId ? '100' : '200'} p-4 rounded-md`}>
                         <p className="text-gray-800">{msg.content}</p>
                     </div>
                 ))}
@@ -57,7 +58,7 @@ export default function Messages({ startupId }: MessagesProps) {
                     className="flex-1"
                 />
                 <Button onClick={handleMessageSend} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
-                    Send
+                    Send Message
                 </Button>
             </div>
         </div>

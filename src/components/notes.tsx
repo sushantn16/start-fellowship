@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 import { getNotes, createNote } from "@/services/notes.service";
+import { Textarea } from "./ui/textarea";
 
 interface Note {
     id: number;
@@ -45,7 +45,7 @@ export default function Notes({ startupId }: NotesProps) {
                 ))}
             </div>
             <div className="mt-4 flex items-center space-x-2">
-                <Input
+                <Textarea
                     placeholder="Type a note"
                     value={note}
                     onChange={(e) => setNote(e.target.value)}

@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 export default function Login() {
   // Initialize form objects
   const [loginForm, setLoginForm] = useState({ email: '', password: '', emailError: '', passwordError: '' });
-  const [signupForm, setSignupForm] = useState({ name: '', email: '', password: '', confirmPassword: '', role: 'STARTUP', nameError: '', emailError: '', passwordError: '', confirmPasswordError: '' });
+  const [signupForm, setSignupForm] = useState({ name: '', email: '', password: '', confirmPassword: '', role: 'USER', nameError: '', emailError: '', passwordError: '', confirmPasswordError: '' });
   const validateForm = (form:any) => {
     let isValid = true;
 
