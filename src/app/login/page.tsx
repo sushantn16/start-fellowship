@@ -12,11 +12,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { login, register } from '@/services/auth.service';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
   // Initialize form objects
   const [loginForm, setLoginForm] = useState({ email: '', password: '', emailError: '', passwordError: '' });
-const [signupForm, setSignupForm] = useState({ name: '', email: '', password: '', confirmPassword: '', role: 'STARTUP', nameError: '', emailError: '', passwordError: '', confirmPasswordError: '' });
+  const [signupForm, setSignupForm] = useState({ name: '', email: '', password: '', confirmPassword: '', role: 'STARTUP', nameError: '', emailError: '', passwordError: '', confirmPasswordError: '' });
   const validateForm = (form:any) => {
     let isValid = true;
 
@@ -40,13 +41,16 @@ const [signupForm, setSignupForm] = useState({ name: '', email: '', password: ''
     return { isValid, form };
   };
 
-  // Handle submission of login and register form
+// Handle submission of login and register form
+const router = useRouter()
+
 const handleLogin = async () => {
     const validation = validateForm(loginForm);
     setLoginForm(validation.form);
 
     if (validation.isValid) {
         const res = await login(loginForm.email, loginForm.password);
+        router.push('/dashboard')
     }
 };
 
