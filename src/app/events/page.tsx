@@ -61,7 +61,7 @@ export default function Event() {
                     </div>
                     <Dialog open={isDialogOpen} onOpenChange={onDialogChange}>
                         <DialogTrigger>
-                            {/* Trigger for opening the dialog */}
+                            Add Event
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
