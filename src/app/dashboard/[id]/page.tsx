@@ -67,12 +67,7 @@ export default function DashboardDetail({ params }: { params: { id: number } }) 
                                 </div>
                                 <div className="flex items-start flex-col gap-2 text-right">
                                     <div className="flex items-center gap-2">
-                                        <div className="text-sm font-medium">{startup.stage}</div>
-                                        <Badge className="h-6">Series A</Badge>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <div className="text-sm font-medium">Employees</div>
-                                        <div className="text-sm font-medium">25</div>
+                                        <Badge className="h-6">{startup.stage}</Badge>
                                     </div>
                                 </div>
                             </div>

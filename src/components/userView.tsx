@@ -58,7 +58,7 @@ export default function UserView() {
                         <p className="text-sm text-gray-500">Click here to create a new startup</p>
                     </div>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className='lg:max-w-screen-lg overflow-y-scroll max-h-screen'>
                 <DialogHeader>
                     <DialogTitle>Add Startup</DialogTitle>
                     <DialogDescription>
@@ -85,6 +85,9 @@ export default function UserView() {
 
                         <Label htmlFor="startupCountry">Country</Label>
                         <Input type="text" id="startupCountry" name="startupCountry" value={startupCountry} onChange={(e) => setStartupCountry(e.target.value)} placeholder="Enter startup country" required />
+
+                        <Label htmlFor="phone">Phone</Label>
+                        <Input type="text" id="phone" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter startup phone" required />
 
                         <Label htmlFor="startupStage">Stage</Label>
                         <Select defaultValue="IDEA" value={startupStage} onValueChange={(value) => setStartupStage(value)}>
