@@ -7,7 +7,8 @@ export async function POST(req: NextRequest) {
     const { email, password } = data;
     const prisma = new PrismaClient()
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email: email } });
+    console.log(user)
     if (!user) {
         NextResponse.json({ error: 'Invalid login.' });
         return;
