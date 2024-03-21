@@ -9,21 +9,22 @@ interface NotesProps {
 
 export default function Notes({ startupId }: NotesProps) {
     const [note, setNote] = useState('');
-    const [notes, setNotes] = useState<string[]>([]);
+    const [notes, setNotes] = useState([]);
 
-    const handleNoteSend = async () => {
-        if (note.trim() !== '') {
-            await createNote(note, startupId);
-            setNotes([...notes, note]);
-            setNote('');
-        }
-    };
-
-    useEffect(() => {
         const fetchNotes = async () => {
             const notesData = await getNotes(startupId);
             setNotes(notesData);
         };
+
+    const handleNoteSend = async () => {
+        await createNote(note, startupId);
+        setNote('');
+        fetchNotes();
+    };
+
+
+
+    useEffect(() => {
 
         fetchNotes();
     }, [startupId]);
