@@ -1,6 +1,9 @@
 import bcrypt from 'bcryptjs';
-const APP_SECRET: string = 'appsecret321';
 const jwt = require('jsonwebtoken');
+
+const jwtConfig = {
+  secret: new TextEncoder().encode(process.env.AUTH_SECRET),
+}
 
 function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 10);
@@ -16,9 +19,9 @@ function generateToken(user: any): string {
       userId: user.id,
       role: user.role 
     }, 
-    APP_SECRET,  
+    jwtConfig.secret,  
     { expiresIn: '30d' } 
   );
 }
 
-export { APP_SECRET, hashPassword, validatePassword, generateToken };
+export { hashPassword, validatePassword, generateToken };

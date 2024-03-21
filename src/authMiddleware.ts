@@ -10,16 +10,24 @@ interface CustomJwtPayload extends JwtPayload {
 
 export default function authMiddleware(handler: (req: NextRequest, res: NextResponse) => void) {
   return async (req: NextRequest, res: NextResponse) => {
-    const token = req.headers.authorization||'';
-      
+    console.log(req)
+    const token = req.cookies.get('token')?.value || '';
+
     const decodedToken = jwt.verify(token, APP_SECRET) as CustomJwtPayload;
 
-    if (!decodedToken || decodedToken.role !== 'admin') {
+    if (req.nextUrl.pathname.startsWith('/dashboard')) {
+      console.log(decodedToken)
+      if (!decodedToken) {
         return NextResponse.json(
-              { success: false, message: 'You need admin privileges to perform this action.' },
-              { status: 401 }
-            )
+          { success: false, message: 'You need privileges to perform this action.' },
+          { status: 401 }
+        )
+      }
     }
     return NextResponse.next();
   };
 };
+
+export const config = {
+  matcher: ['/((?!api|login|_next/static|_next/image|.*\\.png$).*)'],
+}
