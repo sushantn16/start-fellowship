@@ -10,6 +10,7 @@ import Tasks from "@/components/tasks"
 import Notes from "@/components/notes"
 import { useEffect, useState } from "react"
 import { getUser } from "@/services/auth.service"
+import Timeline from "@/components/timeline"
 
 
 
@@ -90,6 +91,7 @@ export default function DashboardDetail({ params }: { params: { id: number } }) 
                                 </div>
                             </div>
                         </div>
+                        <Timeline startupId={params.id}/>
                         <div className="border rounded-lg p-4">
                             <Tabs defaultValue="messages" className="w-[400px]">
                                 <TabsList>

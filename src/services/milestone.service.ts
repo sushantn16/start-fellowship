@@ -1,5 +1,5 @@
 
-export async function createMessage(title:string, description:string, startupId:number){
+export async function createMilestone(title:string, description:string, startupId:number){
     const response = await fetch('/api/milestone', {
         method: 'POST',
         headers: {
@@ -21,8 +21,8 @@ export async function createMessage(title:string, description:string, startupId:
 
 }
 
-export async function getMessages(startupId:number){
-    const response = await fetch('/api/messages?id='+startupId, {
+export async function getMilestone(startupId:number){
+    const response = await fetch('/api/milestone?id='+startupId, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
