@@ -27,7 +27,8 @@ model Startup {
   website     String
   founder     String
   description String
-  location    Location    @relation(fields: [locationId], references: [id])
+  city        String
+  country     String
   stage       Stage
   tasks       Task[] // 1-n relation to Task
   messages    Message[] // 1-n relation to Message
@@ -35,7 +36,6 @@ model Startup {
   milestones  Milestone[] // 1-n relation to Milestone
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  locationId  Int
   users       User[] // Many-to-many relation with User
 }
 
@@ -75,13 +75,6 @@ model Milestone {
   updatedAt   DateTime @updatedAt
   startupId   Int
   startup     Startup  @relation(fields: [startupId], references: [id])
-}
-
-model Location {
-  id       Int       @id @default(autoincrement())
-  city     String
-  country  String
-  startups Startup[]
 }
 
 enum Role {
