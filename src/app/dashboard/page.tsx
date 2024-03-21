@@ -4,9 +4,24 @@ import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@
 import Sidebar from "@/components/sidebar";
 import DashboardHeader from "@/components/dashboardHeader";
 import { useRouter } from 'next/navigation'
+import { useEffect } from "react";
+import { getUser } from "@/services/auth.service";
 
 export default function Dashboard() {
     const router = useRouter();
+
+    useEffect(() => {
+            const fetchUser = async () => {
+                try {
+                    const user = await getUser();
+                    console.log(user);
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            };
+    
+            fetchUser();
+        }, []);
 
     const sampleData = [
         { id: 1, startup: "Acme Inc", location: "San Francisco, CA", stage: "Series A" },
