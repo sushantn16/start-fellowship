@@ -1,11 +1,12 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { MapPinIcon, ArrowLeftIcon } from "lucide-react"
 import Sidebar from "@/components/sidebar"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Messages from "@/components/messages"
+import Tasks from "@/components/tasks"
+import Notes from "@/components/notes"
+
 
 
 export default function DashboardDetail() {
@@ -71,23 +72,16 @@ export default function DashboardDetail() {
                             </div>
                         </div>
                         <div className="border rounded-lg p-4">
-                            <form className="grid grid-cols-2 items-start gap-4">
-                                <div className="space-y-2">
-                                    <Label className="text-sm" htmlFor="name">
-                                        Subject
-                                    </Label>
-                                    <Input id="subject" placeholder="Enter your message subject..." required />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-sm" htmlFor="message">
-                                        Message
-                                    </Label>
-                                    <Textarea className="min-h-[200px]" id="message" placeholder="Enter your message..." required />
-                                </div>
-                                <div className="w-full grid justify-end items-end gap-2">
-                                    <Button type="submit">Send Message</Button>
-                                </div>
-                            </form>
+                            <Tabs defaultValue="messages" className="w-[400px]">
+                                <TabsList>
+                                    <TabsTrigger value="messages">Messages</TabsTrigger>
+                                    <TabsTrigger value="tasks">Tasks</TabsTrigger>
+                                    <TabsTrigger value="notes">Notes</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="messages"><Messages/></TabsContent>
+                                <TabsContent value="tasks"><Tasks/></TabsContent>
+                                <TabsContent value="notes"><Notes /></TabsContent>
+                            </Tabs>
                         </div>
                     </div>
                 </div>

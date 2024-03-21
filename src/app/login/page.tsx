@@ -11,135 +11,120 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { login, register } from '@/services/auth.service';
 
-export default function Login(): JSX.Element {
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [signupName, setSignupName] = useState('');
-  const [signupEmail, setSignupEmail] = useState('');
-  const [signupPassword, setSignupPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [signupRole, setSignupRole] = useState('startup');
+export default function Login() {
+  // Initialize form objects
+  const [loginForm, setLoginForm] = useState({ email: '', password: '', emailError: '', passwordError: '' });
+const [signupForm, setSignupForm] = useState({ name: '', email: '', password: '', confirmPassword: '', role: 'startup', nameError: '', emailError: '', passwordError: '', confirmPasswordError: '' });
+  const validateForm = (form:any) => {
+    let isValid = true;
 
-  // State variables for error messages
-  const [loginEmailError, setLoginEmailError] = useState('');
-  const [loginPasswordError, setLoginPasswordError] = useState('');
-  const [signupNameError, setSignupNameError] = useState('');
-  const [signupEmailError, setSignupEmailError] = useState('');
-  const [signupPasswordError, setSignupPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-
-  const handleLogin = () => {
-    // Validate login form
-    if (!loginEmail) {
-      setLoginEmailError('Email is required');
-      return;
-    } else {
-      setLoginEmailError('');
-    }
-    if (!loginPassword) {
-      setLoginPasswordError('Password is required');
-      return;
-    } else {
-      setLoginPasswordError('');
+    // Check for empty fields and set error messages
+    for (const key in form) {
+      if (form[key] === '' && !key.includes('Error')) {
+        form[`${key}Error`] = `${key[0].toUpperCase() + key.slice(1)} is required`;
+        isValid = false;
+      } else if (key.includes('Error')) {
+        form[key] = '';
+      }
     }
 
-    console.log("Login Form Data:", { email: loginEmail, password: loginPassword });
-    // Add logic here to handle login submission (e.g., send data to server)
+    // Check for matching passwords in register form
+    if (form.confirmPassword !== undefined && form.confirmPassword !== form.password) {
+      form.confirmPasswordError = 'Passwords do not match';
+      isValid = false;
+    }
+
+    // Return validation result and updated form
+    return { isValid, form };
   };
 
-  const handleSignup = () => {
-    // Validate signup form
-    if (!signupName) {
-      setSignupNameError('Name is required');
-      return;
-    } else {
-      setSignupNameError('');
-    }
-    if (!signupEmail) {
-      setSignupEmailError('Email is required');
-      return;
-    } else {
-      setSignupEmailError('');
-    }
-    if (!signupPassword) {
-      setSignupPasswordError('Password is required');
-      return;
-    } else {
-      setSignupPasswordError('');
-    }
-    if (signupPassword !== confirmPassword) {
-      setConfirmPasswordError('Passwords do not match');
-      return;
-    } else {
-      setConfirmPasswordError('');
-    }
+  // Handle submission of login and register form
+const handleLogin = async () => {
+    const validation = validateForm(loginForm);
+    setLoginForm(validation.form);
 
-    console.log("Signup Form Data:", { name: signupName, email: signupEmail, password: signupPassword, confirmPassword, role: signupRole });
-    // Add logic here to handle signup submission (e.g., send data to server)
-  };
+    if (validation.isValid) {
+        const res = await login(loginForm.email, loginForm.password);
+    }
+};
+
+const handleSignup = async () => {
+    const validation = validateForm(signupForm);
+    setSignupForm(validation.form);
+
+    if (validation.isValid) {
+        const res = await register(
+            signupForm.name,
+            signupForm.email,
+            signupForm.password,
+            signupForm.confirmPassword
+        );
+    }
+};
 
   return (
-    <div className="flex justify-center">
-        <Tabs defaultValue="login" className="w-[400px]">
-          <TabsList className="flex justify-center">
-            <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="signup">Signup</TabsTrigger>
-          </TabsList>
-          <TabsContent value="login">
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="login-email">Email</Label>
-                      <Input id="login-email" placeholder="m@example.com" type="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />
-                      <span className="text-red-500">{loginEmailError}</span>
+      <div className="flex justify-center">
+          <Tabs defaultValue="login" className="w-[400px]">
+            <TabsList className="flex justify-center">
+              <TabsTrigger value="login">Login</TabsTrigger>
+              <TabsTrigger value="signup">Signup</TabsTrigger>
+            </TabsList>
+            <TabsContent value="login">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="login-email">Email</Label>
+                        <Input id="login-email" placeholder="m@example.com" type="email" value={loginForm.email} onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })} />
+                        <span className="text-red-500">{loginForm.emailError}</span>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="login-password">Password</Label>
+                        <Input id="login-password" type="password" value={loginForm.password} onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })} />
+                        <span className="text-red-500">{loginForm.passwordError}</span>
+                      </div>
+                      <Button className="w-full" onClick={handleLogin}>Login</Button>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="login-password">Password</Label>
-                      <Input id="login-password" type="password" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} />
-                      <span className="text-red-500">{loginPasswordError}</span>
+            </TabsContent>
+            <TabsContent value="signup">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-name">Name</Label>
+                        <Input id="signup-name" placeholder="Enter your name" value={signupForm.name} onChange={(e) => setSignupForm({ ...signupForm, name: e.target.value })} />
+                        <span className="text-red-500">{signupForm.nameError}</span>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-email">Email</Label>
+                        <Input id="signup-email" placeholder="m@example.com" type="email" value={signupForm.email} onChange={(e) => setSignupForm({ ...signupForm, email: e.target.value })} />
+                        <span className="text-red-500">{signupForm.emailError}</span>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-password">Password</Label>
+                        <Input id="signup-password" type="password" value={signupForm.password} onChange={(e) => setSignupForm({ ...signupForm, password: e.target.value })} />
+                        <span className="text-red-500">{signupForm.passwordError}</span>
+                      </div>
+                      <div className="space-y-2">
+                          <Label htmlFor="confirm-password">Confirm Password</Label>
+                          <Input id="confirm-password" type="password" value={signupForm.confirmPassword} onChange={(e) => setSignupForm({ ...signupForm, confirmPassword: e.target.value })} />
+                          <span className="text-red-500">{signupForm.confirmPasswordError}</span>
+                      </div>
+                      <div className="space-y-2">
+                          <Label htmlFor="signup-role">Role</Label>
+                          <Select defaultValue="startup" value={signupForm.role} onValueChange={(value) => setSignupForm({ ...signupForm, role: value })}>
+                            <SelectTrigger className="w-[180px]">
+                              <SelectValue placeholder="startup" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="admin">Admin</SelectItem>
+                              <SelectItem value="mentor">Mentor</SelectItem>
+                              <SelectItem value="startup">Startup</SelectItem>
+                            </SelectContent>
+                          </Select>
+                      </div>
+                      <Button className="w-full" onClick={handleSignup}>Sign Up</Button>
                     </div>
-                    <Button className="w-full" onClick={handleLogin}>Login</Button>
-                  </div>
-          </TabsContent>
-          <TabsContent value="signup">
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-name">Name</Label>
-                      <Input id="signup-name" placeholder="Enter your name" value={signupName} onChange={(e) => setSignupName(e.target.value)} />
-                      <span className="text-red-500">{signupNameError}</span>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-email">Email</Label>
-                      <Input id="signup-email" placeholder="m@example.com" type="email" value={signupEmail} onChange={(e) => setSignupEmail(e.target.value)} />
-                      <span className="text-red-500">{signupEmailError}</span>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-password">Password</Label>
-                      <Input id="signup-password" type="password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} />
-                      <span className="text-red-500">{signupPasswordError}</span>
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="confirm-password">Confirm Password</Label>
-                        <Input id="confirm-password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                        <span className="text-red-500">{confirmPasswordError}</span>
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="signup-role">Role</Label>
-                        <Select defaultValue="startup" value={signupRole} onValueChange={setSignupRole}>
-                          <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="startup" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="admin">Admin</SelectItem>
-                            <SelectItem value="mentor">Mentor</SelectItem>
-                            <SelectItem value="startup">Startup</SelectItem>
-                          </SelectContent>
-                        </Select>
-                    </div>
-                    <Button className="w-full" onClick={handleSignup}>Sign Up</Button>
-                  </div>
-          </TabsContent>
-        </Tabs>
-    </div>
-  );
-}
+            </TabsContent>
+          </Tabs>
+      </div>
+    );
+  }
