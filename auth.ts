@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { Prisma, User } from '@prisma/client';
 const APP_SECRET: string = 'appsecret321';
 
 function hashPassword(password: string): Promise<string> {
