@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { SearchIcon } from "lucide-react"
 import { logout } from "@/services/auth.service"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 
 export default function DashboardHeader() {
