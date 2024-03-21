@@ -43,6 +43,7 @@ model Startup {
   description String
   city        String
   country     String
+  phone       String?
   stage       Stage
   tasks       Task[] // 1-n relation to Task
   messages    Message[] // 1-n relation to Message
