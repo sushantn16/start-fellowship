@@ -15,6 +15,19 @@ export async function login(email: string, password: string) {
     return data;
 }
 
+export async function getUser() {
+    const response = await fetch('/api/user', {
+        method: 'GET'
+    });
+
+    if (!response.ok) {
+        throw new Error('Getting User failed');
+    }
+
+    const data = await response.json();
+    return data;
+}
+
 export async function register(name: string, email: string, password: string, role: string) {
     const response = await fetch('/api/signup', {
         method: 'POST',
