@@ -4,17 +4,20 @@ import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@
 import Sidebar from "@/components/sidebar";
 import DashboardHeader from "@/components/dashboardHeader";
 import { useRouter } from 'next/navigation'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUser } from "@/services/auth.service";
+import UserView from "@/components/userView";
 
 export default function Dashboard({ params }: { params: { id: number } }) {
+    const [userRole, setUserRole] = useState<string | null>(null);
     const router = useRouter();
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
                 const user = await getUser();
-                console.log(user);
+                console.log(user)
+                setUserRole(user.role);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
@@ -22,6 +25,8 @@ export default function Dashboard({ params }: { params: { id: number } }) {
 
         fetchUser();
     }, []);
+
+    console.log(userRole)
 
     const sampleData = [
         { id: 1, startup: "Acme Inc", location: "San Francisco, CA", stage: "Series A" },
@@ -41,6 +46,9 @@ export default function Dashboard({ params }: { params: { id: number } }) {
             <div className="flex flex-col">
                 <DashboardHeader />
                 <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+                    <div>
+                        {userRole === 'USER' && <UserView />}
+                    </div>
                     <div className="border shadow-sm rounded-lg">
                         <Table>
                             <TableHeader>
