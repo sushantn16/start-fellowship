@@ -1,15 +1,17 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse, NextRequest } from 'next/server';
+import { getUser } from '@/lib/jwtTokenControl';
 
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
     const data = await req.json();
+
     const task = await prisma.task.create({
         data: {
             name: data.name,
             startup: {
-                connect: { id: data.userId }
+                connect: { id: parseInt(data.startupId) }
             }
         }
     });
