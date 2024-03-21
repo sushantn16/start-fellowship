@@ -123,7 +123,7 @@ const handleSignup = async () => {
                             <SelectContent>
                               <SelectItem value="ADMIN">Admin</SelectItem>
                               <SelectItem value="MENTOR">Mentor</SelectItem>
-                              <SelectItem value="STARUP">Startup</SelectItem>
+                              <SelectItem value="USER">Startup</SelectItem>
                             </SelectContent>
                           </Select>
                       </div>
