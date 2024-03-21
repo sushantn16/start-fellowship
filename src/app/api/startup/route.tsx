@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     
     const { name, website, founder, description, city, country, stage } = data;
-    let token = req.cookies.get('token')?.value || '';
+    const token = req.cookies.get('token')?.value || '';
 
     const user = await getUser(token);
 

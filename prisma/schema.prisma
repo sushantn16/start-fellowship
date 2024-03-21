@@ -21,6 +21,18 @@ model User {
   startups  Startup[]
   events    Event[]
   messages  Message[] // 1-n relation to Message
+  files     File[]
+}
+
+model File {
+  id        Int      @id @default(autoincrement())
+  name      String
+  startupId Int
+  startup   Startup  @relation(fields: [startupId], references: [id])
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Startup {
@@ -39,6 +51,7 @@ model Startup {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   users       User[] // Many-to-many relation with User
+  files       File[]
 }
 
 model Task {
