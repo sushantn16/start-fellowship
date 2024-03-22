@@ -66,7 +66,7 @@ export default function Component({ params }: { params: { id: number } }) {
                                 <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">Description</h2>
                                 <p className="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                                     Event 1 is a special occasion where we gather to celebrate our achievements and plan for the future.
-                                    Join us for a day filled with excitement and inspiration. Don't miss out on this incredible
+                                    Join us for a day filled with excitement and inspiration. Don&apos;t miss out on this incredible
                                     opportunity to connect with like-minded individuals and learn from industry experts. Save the date
                                     and be part of something extraordinary!
                                 </p>

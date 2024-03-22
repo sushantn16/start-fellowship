@@ -69,7 +69,6 @@ export default function Component() {
 
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
-        console.log(formData);
         // Add your submission logic here
     };
 
@@ -267,7 +266,7 @@ export default function Component() {
                                     <Input placeholder="First name and last name" required name="confirmationName" value={formData.confirmationName} onChange={handleChange} />
                                 </div>
                                 <div>
-                                    <Label>Today's date</Label>
+                                    <Label>Today&apos;s date</Label>
                                     <Input required type="date" name="confirmationDate" value={formData.confirmationDate} onChange={handleChange} />
                                 </div>
                             </div>
